@@ -8,6 +8,7 @@ const refresh = document.querySelector('#refresh')
 const download = document.querySelector('#download')
 const copyr = document.querySelector('#copyr')
 const share = document.querySelector('#share')
+const Insult_Avatar_Key = "insult-avatar"
 
 refresh.style.display='none'
 download.style.display='none'
@@ -80,12 +81,32 @@ button.addEventListener('click', e =>{
         share.style.display='block'
         h1.innerText= userName.value
         userName.style.display = 'none'
-        const randomIndex = Math.floor(Math.random() * myObj["insults"].length);
-        const randomInsult = myObj["insults"][randomIndex];
-        instr.innerHTML=""
-        // console.log(instr)
-        instr.innerText = randomInsult
+
+        let data = JSON.parse(localStorage.getItem('data')) || {"expire": "", "avatar": []};
+        if (data.avatar.includes(userName.value)) {
+            //console.log('hi');
+            // instr.innerHTML='';
+            instr.innerText="How many times in a day should i insult you ?";
+        } 
+        else 
+        {
+            const randomIndex = Math.floor(Math.random() * myObj["insults"].length);
+            const randomInsult = myObj["insults"][randomIndex];
+            // instr.innerHTML = '';
+            instr.innerText = randomInsult;
+
+            // Add userName.value to avatar array
+            data.avatar.push(userName.value);
+            localStorage.setItem('data', JSON.stringify(data));
+
+            // Set expiresin date in local storage
+            let expiresin = new Date();
+            expiresin.setDate(expiresin.getDate() + 1);
+            data.expire = expiresin.toISOString().slice(0,10);
+            localStorage.setItem('data', JSON.stringify(data));
+        }
   });
+  
     button.style.display = 'none'
     refresh.addEventListener('click', ()=>{
         window.location.reload()
