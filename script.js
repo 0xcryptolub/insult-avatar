@@ -102,9 +102,9 @@ button.addEventListener('click', e =>{
         h1.innerText= userName.value
         userName.style.display = 'none'
         const str = userName.value
-        if (creator.includes(str.toLowerCase())) {
-            console.log("name found")
-        }else{
+        // if (creator.includes(str.toLowerCase())) {
+        //     console.log("name found")
+        // }else{
         let data = JSON.parse(localStorage.getItem('data')) || {"expire": "", "avatar": []};
         if (data.avatar.includes(userName.value)) {
             //console.log('hi');
@@ -127,7 +127,7 @@ button.addEventListener('click', e =>{
             expiresin.setDate(expiresin.getDate() + 1);
             data.expire = expiresin.toISOString().slice(0,10);
             localStorage.setItem('data', JSON.stringify(data));
-        }}
+        }
   });
   
     button.style.display = 'none'
