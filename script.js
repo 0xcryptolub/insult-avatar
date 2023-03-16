@@ -9,7 +9,9 @@ const download = document.querySelector('#download')
 const copyr = document.querySelector('#copyr')
 const share = document.querySelector('#share')
 const Insult_Avatar_Key = "insult-avatar"
+const creator = ["harish","harish kumar"]
 
+button.style.display='none'
 refresh.style.display='none'
 download.style.display='none'
 copyr.style.display='none'
@@ -38,13 +40,25 @@ userName.addEventListener('keyup', () => {
     .then((data) => {
         foundGender = data.gender;
         gender = foundGender;
-        if(inputName.length > 3){
-            changeAvatar();
+        if(inputName.length >= 1){
+            button.style.display='block'
+            button.style.left = "50%";
+            button.style.transform = "translateX(-50%)";
+            if(inputName.length>=3){
+                changeAvatar();
+            }
         }
-        // console.log(foundGender + gender);
+        else if(inputName.length<3){
+            //button.style.display='none'
+            avatarImg.style.display='none'
+            if(inputName.length<2){
+                button.style.display='none'
+            }
+        }
     })
     // console.log(url);
 })
+
 // Change the avatar
 const changeAvatar = function(){
     seed = '&seed=' + userName.value;
@@ -71,6 +85,12 @@ const changeAvatar = function(){
 //trying to add insult feature
 
 button.addEventListener('click', e =>{
+    const inp = userName.value.trim();
+    //checking if input value is == ""
+    if (inp.length === 0) {
+        e.preventDefault()
+        return;
+    }else{
     e.preventDefault()
     fetch('./insult.json')
     .then(response => response.json())
@@ -81,7 +101,10 @@ button.addEventListener('click', e =>{
         share.style.display='block'
         h1.innerText= userName.value
         userName.style.display = 'none'
-
+        const str = userName.value
+        if (creator.includes(str.toLowerCase())) {
+            console.log("name found")
+        }else{
         let data = JSON.parse(localStorage.getItem('data')) || {"expire": "", "avatar": []};
         if (data.avatar.includes(userName.value)) {
             //console.log('hi');
@@ -104,14 +127,15 @@ button.addEventListener('click', e =>{
             expiresin.setDate(expiresin.getDate() + 1);
             data.expire = expiresin.toISOString().slice(0,10);
             localStorage.setItem('data', JSON.stringify(data));
-        }
+        }}
   });
   
     button.style.display = 'none'
     refresh.addEventListener('click', ()=>{
         window.location.reload()
-    })
+    })}
 })
+
 
 
 
