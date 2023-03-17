@@ -102,9 +102,6 @@ button.addEventListener('click', e =>{
         h1.innerText= userName.value
         userName.style.display = 'none'
         const str = userName.value
-        // if (creator.includes(str.toLowerCase())) {
-        //     console.log("name found")
-        // }else{
         let data = JSON.parse(localStorage.getItem('data')) || {"expire": "", "avatar": []};
         if (data.avatar.includes(userName.value)) {
             //console.log('hi');
