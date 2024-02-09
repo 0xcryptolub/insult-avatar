@@ -45,11 +45,11 @@ userName.addEventListener('keyup', () => {
             button.style.left = "50%";
             button.style.transform = "translateX(-50%)";
             if(inputName.length>=3){
+                avatarImg.style.display='block'
                 changeAvatar();
             }
         }
         else if(inputName.length<3){
-            //button.style.display='none'
             avatarImg.style.display='none'
             if(inputName.length<2){
                 button.style.display='none'
